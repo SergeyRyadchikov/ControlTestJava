@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import View.ConsolView;
 import Model.GamingMachine;
 import Service.MachineService.DownloadData;
+import Service.MachineService.SaveData;
 import Service.AdminService.AddedToy;
 import Service.AdminService.ChoosingToy;
 import Service.AdminService.DeleteToy;
@@ -29,6 +30,7 @@ public class Controller {
 
         String fileNomeclatureAddress = "SistemData/SavedNomenclature.csv";
         String fileQueueAddress = "SistemData/Queue.csv";
+        String givenOutToysAddress = "UserData/GivenOutToys.txt";
 
         // создание обьектов сервиса
         DownloadData downloadData = new DownloadData();
@@ -36,6 +38,7 @@ public class Controller {
         DeleteToy dToy = new DeleteToy();
         EditParametersToys eParametersToys = new EditParametersToys();
         ChoosingToy choosingToy = new ChoosingToy();
+        SaveData saveData = new SaveData();
 
         System.out.println("Включение...");
 
@@ -88,7 +91,7 @@ public class Controller {
                                 cView.printListToy(gMachine.getNomenclature_toys());
                                 System.out.println("Введите ID игрушки для изменения");
                                 int enteredID = cView.requestID();
-                                //Напечатаем параметры игрушки перед изменением
+                                // Напечатаем параметры игрушки перед изменением
                                 cView.printToy(choosingToy.choosingToy(gMachine.getNomenclature_toys(), enteredID));
                                 boolean editStatus = true;
                                 while (editStatus) {
@@ -127,10 +130,16 @@ public class Controller {
                             case "6":
                                 System.out.println("Сохранение параметров.....");
                                 try {
+                                    // Сохраняем списки в соответствующие файлы
+                                    saveData.saveDataCSV(fileNomeclatureAddress, gMachine.getNomenclature_toys());
+                                    saveData.saveDataCSV(fileQueueAddress, gMachine.getQueue());
+                                    saveData.saveDataTXT(givenOutToysAddress, gMachine.getGivenOut());
+
                                     TimeUnit.SECONDS.sleep(1);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
+                                System.out.println("Параматры сохранены....\n");
                                 System.out.println("Завершение работы....\n");
                                 try {
                                     TimeUnit.SECONDS.sleep(1);
@@ -142,7 +151,6 @@ public class Controller {
                                 status = false;
                                 break;
                             case "7":
-                                System.out.println("Досвидули администратор7");
                                 admStatus = false;
                                 break;
                             default:
