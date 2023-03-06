@@ -28,8 +28,8 @@ public class ConsolView {
         return weight;
     }
 
-    //функция запроса ID 
-    public int requestID(){
+    // функция запроса ID
+    public int requestID() {
         return scan.nextInt();
     }
 
@@ -37,7 +37,7 @@ public class ConsolView {
     public void printListToy(List<Toy> listToys) {
 
         for (Toy toy : listToys) {
-            // System.out.printf("%s  |  %s\n", toy.getIdToy(), toy.getNameToy());
+            // System.out.printf("%s | %s\n", toy.getIdToy(), toy.getNameToy());
             printToy(toy);
         }
     }
@@ -47,9 +47,8 @@ public class ConsolView {
         System.out.printf("-----\nID - %s\nНазвание - %s\nКоличество - %s\nВес - %s\n-----\n",
                 toy.getIdToy(),
                 toy.getNameToy(),
-                toy.getWeightToy(),
-                toy.getAmountToys());
+                toy.getAmountToys(),
+                toy.getWeightToy());
     }
-
 
 }

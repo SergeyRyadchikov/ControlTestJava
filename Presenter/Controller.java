@@ -4,8 +4,10 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import View.ConsolView;
 import Model.GamingMachine;
+import Model.Toy;
 import Service.MachineService.DownloadData;
 import Service.MachineService.SaveData;
+import Service.UserService.Lottery;
 import Service.AdminService.AddedToy;
 import Service.AdminService.ChoosingToy;
 import Service.AdminService.DeleteToy;
@@ -39,6 +41,7 @@ public class Controller {
         EditParametersToys eParametersToys = new EditParametersToys();
         ChoosingToy choosingToy = new ChoosingToy();
         SaveData saveData = new SaveData();
+        Lottery lottery = new Lottery();
 
         System.out.println("Включение...");
 
@@ -167,18 +170,23 @@ public class Controller {
                                 + "2. Ваши призы\n"
                                 + "3. Забрать приз\n"
                                 + "4. Выход\n");
-                        switch (scan.next()) {
+                        switch (scan.next("Введите команду: ")) {
                             case "1":
-                                System.out.println("enter 1");
+                                System.out.println("Ваш выйгрыш!");
+                                cView.printToy(
+                                        lottery.chooseOnWeight(gMachine.getNomenclature_toys(), gMachine.getQueue()));
                                 break;
                             case "2":
-                                System.out.println("enter 2");
+                                cView.printListToy(gMachine.getQueue());
                                 break;
                             case "3":
-                                System.out.println("enter 3");
+                                Toy lastToy = gMachine.getQueue().get(gMachine.getQueue().size() - 1);
+                                System.out.println("Вы получаете:");
+                                cView.printToy(lastToy);
+                                gMachine.getGivenOut().add(lastToy);
+                                gMachine.getQueue().remove(lastToy);
                                 break;
                             case "4":
-                                System.out.println("enter 4");
                                 gamerStatur = false;
                                 break;
                             default:
