@@ -14,12 +14,12 @@ public class DownloadData {
         try (BufferedReader br = new BufferedReader(new FileReader(fileAddress))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] country = line.split(";");
+                String[] param = line.split(";");
                 Toy toy = new Toy();
-                toy.setIdToy(Integer.parseInt(country[0]));
-                toy.setNameToy(country[1]);
-                toy.setAmountToys(Integer.parseInt(country[2]));
-                toy.setWeightToy(Integer.parseInt(country[3]));
+                toy.setIdToy(Integer.parseInt(param[0]));
+                toy.setNameToy(param[1]);
+                toy.setAmountToys(Integer.parseInt(param[2]));
+                toy.setWeightToy(Integer.parseInt(param[3]));
                 listToys.add(toy);
             }
         } catch (IOException ex) {

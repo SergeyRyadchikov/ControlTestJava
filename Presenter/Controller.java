@@ -48,7 +48,8 @@ public class Controller {
         // подгрузка всех данных из файлов
         try {
             gMachine.setNomenclature_toys(downloadData.downloadListToysFromFile(fileNomeclatureAddress));
-            gMachine.setGivenOut(downloadData.downloadListToysFromFile(fileQueueAddress));
+            gMachine.setQueue(downloadData.downloadListToysFromFile(fileQueueAddress));
+
             TimeUnit.SECONDS.sleep(1);
 
             System.out.println("Файлы загружены...");
@@ -88,7 +89,10 @@ public class Controller {
                                 dToy.delToy(gMachine.getNomenclature_toys(), cView.requestID());
                                 break;
                             case "4":
-                                cView.printListToy(gMachine.getQueue());
+                                if (!gMachine.getQueue().isEmpty()) {
+                                    cView.printListToy(gMachine.getQueue());
+                                } else
+                                    System.out.println("Очередь пуста!");
                                 break;
                             case "5":
                                 cView.printListToy(gMachine.getNomenclature_toys());
@@ -170,21 +174,27 @@ public class Controller {
                                 + "2. Ваши призы\n"
                                 + "3. Забрать приз\n"
                                 + "4. Выход\n");
-                        switch (scan.next("Введите команду: ")) {
+                        switch (scan.next()) {
                             case "1":
                                 System.out.println("Ваш выйгрыш!");
                                 cView.printToy(
                                         lottery.chooseOnWeight(gMachine.getNomenclature_toys(), gMachine.getQueue()));
                                 break;
                             case "2":
-                                cView.printListToy(gMachine.getQueue());
+                                if (!gMachine.getQueue().isEmpty()) {
+                                    cView.printListToy(gMachine.getQueue());
+                                } else
+                                    System.out.println("Список призов пока пуст! Сыграйте в игру!");
                                 break;
                             case "3":
-                                Toy lastToy = gMachine.getQueue().get(gMachine.getQueue().size() - 1);
-                                System.out.println("Вы получаете:");
-                                cView.printToy(lastToy);
-                                gMachine.getGivenOut().add(lastToy);
-                                gMachine.getQueue().remove(lastToy);
+                                if (!gMachine.getQueue().isEmpty()) {
+                                    Toy lastToy = gMachine.getQueue().get(gMachine.getQueue().size() - 1);
+                                    System.out.println("Вы получаете:");
+                                    cView.printToy(lastToy);
+                                    gMachine.getGivenOut().add(lastToy);
+                                    gMachine.getQueue().remove(lastToy);
+                                } else
+                                    System.out.println("Список призов пока пуст! Сыграйте в игру!");
                                 break;
                             case "4":
                                 gamerStatur = false;
