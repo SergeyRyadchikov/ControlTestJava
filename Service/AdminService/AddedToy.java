@@ -15,12 +15,14 @@ public class AddedToy {
         for (Toy toy : listToys) {
             if (toy.getNameToy().toLowerCase().equals(newToy.getNameToy().toLowerCase())) {
                 toy.setAmountToys(toy.getAmountToys() + newToy.getAmountToys());
+                System.out.println("Позиция добавлена!");
                 statusee = true;
             }
 
         }
         if (statusee == false) {
             listToys.add(newToy);
+            System.out.println("Позиция добавлена!");
         }
 
     }
